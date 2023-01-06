@@ -1,0 +1,164 @@
+@import "./variables";
+
+
+.breadcumbs{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 15px;
+    margin: 10px 0;
+
+    a{
+        text-decoration: none;
+    }
+
+    .hidden-links{
+        display: flex;
+        span{ padding: 0px 10px;}
+        a{font-size: 14px; }
+    }
+
+    .share-posts{
+        display: flex;
+        align-items: center;
+    
+        a{color: $secondaryTextColor;}
+        p{margin: 0px 8px 0px 0px;}
+        
+        .share{
+            margin: 0px 2px;
+            width: 34px;height: 34px;
+            border-radius: 50%;
+            background-color: #333333;
+            text-align: center;
+            line-height: 33px;
+            font-size: 1.4em;
+
+            text-decoration: none;
+            transition-duration: 0.75s;
+            transition-timing-function: ease;
+            transition-delay: 0s;
+            transition-property: all;
+        
+            &:hover{
+                background-color: $primaryColor;
+            }
+
+            
+        }
+    }
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3 ,1fr);
+    
+}
+
+.card{
+    margin-top: 50px;
+    padding: 0px 15px 30px;
+}
+
+.grid img{
+
+    max-width: 100%;
+    transition: all .5s;
+    
+}
+
+.card img:hover{
+    transform: scale(1.02);
+}
+
+
+.container{
+    max-width: 1280px;
+    margin: 0px auto;
+}
+.content::before{
+    max-width: 1280px;
+    margin: 0px auto;
+}
+.content{
+   
+    display:flex;
+    justify-content: center;
+}
+
+//mudei aqui    
+.grid,.breadcumbs{
+    max-width: 1280px;
+    width: 100%;
+}
+
+.card h1{
+    color: $primaryColor;
+    font-family: fs_elliot_probold;
+    font-size: 26px;
+    padding: 20px 25px 0;
+}
+
+.card p{
+    margin-top: 5px;
+    font-size: 17px;
+    font-family: fs_elliot_proregular;
+    padding: 0 25px;
+    margin-top: 5px;
+}
+
+@media (max-width: 1200px) {
+    .grid{
+        width: 1170px;
+    }
+}
+
+@media (max-width: 992px) {
+    .grid {
+        width: 970px;
+    }
+}
+@media (max-width: 768px) {
+    .grid {
+        width: 750px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .grid{
+        grid-template-columns: repeat(2 ,1fr);
+     
+    }
+
+}
+
+@media screen and (max-width: 522px) {
+    .grid{
+        grid-template-columns: repeat(1 ,1fr);
+    }
+
+}
+
+.backtotop {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    background-color: $primaryColor;
+    width: 40px;
+    height: 40px;
+}
+
+.backtotop{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s,opacity 1s;  
+    opacity: 1.0;
+}
+
+.backtotop:hover{
+    background-color: rgb(204, 204, 204);
+}
+
+.backtotop-hidden{
+    opacity: 0.0;
+}

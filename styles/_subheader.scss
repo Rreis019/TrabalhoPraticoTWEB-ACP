@@ -1,0 +1,234 @@
+#subheader{
+    display: flex;
+ 
+    align-items: center;
+    background-color: $secondaryColor;
+    border-bottom: 1px solid $headerBorderColor;
+    position: relative;
+    #subheader-left{display: none;}
+
+
+    #subheader-navbar{
+        display: table;
+        border-collapse: separate;
+        border-spacing: 5px 0px;
+        max-width: 1200px;
+        width: 100%;
+        a
+        {
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            line-height: 1.4;
+            width: auto;
+            display: table-cell;
+            text-align: center;
+            padding: 20px 0px;
+            position: relative;
+    
+            &:hover{
+                cursor: pointer;
+            }
+        }
+    }
+
+    a.active{
+        color: $primaryColor;
+        &::after{
+            content: "";
+            position: absolute;
+            border-bottom: 5px solid $primaryColor;
+            bottom: 0px;
+            left: 0px;
+            width: 100%;
+        }
+    }
+
+    .subheader-right{
+        display: none;
+        gap: 20px;
+    
+        .btn-ca{height: 40px;}
+    
+        .icon-user::before
+        {
+            font-size: 30px;
+            color: $primaryColor
+        }
+    }
+}
+
+.outer
+{
+    //display:none;
+    display: flex;
+    transform-origin: 0 0;
+    transform: scale(1,0);
+    transition: all 0.1s ease;
+    transition-delay: 250ms;
+    position: absolute;
+    top: 0px;
+    margin-top: 63px;
+    width: 100%;
+    z-index: 2;
+    background-color: $secondaryColor;
+
+    list-style-type: none;
+    background-color: rgb(247, 247, 247);
+
+ 
+    &-content{
+        display: none;
+        position: absolute;
+        width: 100% - 34%;
+        height: 100%;
+        left: 33%;
+        top: 0px;
+        grid-template-columns: 4fr 4fr 5fr;
+        grid-template-rows: 1fr;
+        
+        
+        @media screen and (max-width: 1060px) { 
+            left: 30%;
+            grid-template-columns: 6fr 6fr 5fr;
+        }
+
+        ul{
+            margin-top: 15px;
+            a{
+                &:hover{
+                    color: $primaryTextColor;
+                }
+            }
+        }
+
+
+
+    }
+
+
+    ul{
+        top: 0px;
+        width: fit-content;
+        width: 100%;
+  
+        margin-left: 30px;
+        li {
+            margin-bottom: 20px;
+            width: 100%;
+            a{
+                font-size: 16px;
+                display: flex;
+                align-items: center;
+                
+            }
+        }
+    }
+
+    &>ul{
+        width: 100%;
+        display: block;
+        position: relative;
+        left: 0px;
+        list-style: none;
+        margin-left: 0px;
+
+        >li{
+            >a{
+                margin-left: 55%;
+                line-height: 48px;
+                font-size: 15px;
+                font-family: fs_elliot_probold; 
+
+                white-space: nowrap;
+                @media only screen and (max-width: 1700px){margin-left: 40%;}
+                @media only screen and (max-width: 1300px){margin-left: 15%;}
+                @media only screen and (max-width: 1100px){margin-left: 4%;}
+            }
+        }
+
+    
+        li{
+            height: 48px;
+            background-color: rgb(234, 234, 234);
+            margin-bottom: 0px;
+           
+            a{
+                width: 100%;
+                height: 100%;
+                display: block;
+               
+            }
+
+            &.active
+            {
+                background-color: rgb(247, 247, 247);
+                >a{
+                    color: red;
+                }
+            }
+
+           
+        }
+        &>li{
+            width: 33%;
+            @media screen and (max-width: 1060px) { width: 30%;} //partir de certo tamanho dimui witdh da coluna cinzenta
+        }
+        .outer-other{
+            display: none;
+            margin-top: 20px;
+            img{
+                transition: all .5s;
+                width: 100%;
+                max-width: 290px;
+                &:hover{transform: scale(1.02);}
+            }
+
+            h1{
+                font-size: 18px;
+                color: $primaryColor;
+            }
+            p{font-size: 14px;}
+
+            
+        }
+        
+        .active{
+            .outer-content{
+                display: grid;
+            }
+
+            .outer-other{
+                display: block;
+                margin-left: 30px;
+            }
+
+            ul{
+                display: block;
+                list-style-type: square;
+
+                li{
+                    background-color: rgb(247, 247, 247);
+                    
+                    a
+                    {
+                        width: fit-content;
+                        cursor: pointer;
+                        @include smoothColorHover();
+                    }
+                  
+                    &::marker{
+                        color: red;
+                    }
+                    
+                   
+                }
+
+             
+            }
+            ul:nth-child(2){
+                margin-left: 30px;
+            }
+        }
+    }
+}

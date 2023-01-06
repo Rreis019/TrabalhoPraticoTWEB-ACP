@@ -1,0 +1,170 @@
+@import "./variables";
+
+
+footer{
+    background-color: $footerColor;
+}
+
+.footer{
+  
+    width: 100%;
+    display: flex;
+    padding: 10px 15px 50px;
+    padding-top: 70px;
+    gap: 20px;
+
+    .footer-grid{
+        display: grid;
+        width: 75%;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+
+        grid-row-gap: 10px;
+        gap: 15px;
+
+        div{
+            padding: 0px 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        div a:first-child
+        {
+            color: black;
+            font-size: 18px;
+            padding: 0px 0px 10px;
+            font-family: fs_elliot_proregular;
+            font-weight: bold;
+            border-bottom: 1px solid gray;
+
+            &:after{
+                content: " ";
+                width: 128px;
+                height: 1px;
+                background-color: black;
+            }
+        }
+
+        a:hover{
+            color: $primaryColor;
+        }
+
+        @media only screen and (max-width: 800px){
+            display: none;
+        }
+
+    }
+
+    .footer-right{
+        display: flex;
+        flex-direction: column;
+        width: 25%;
+
+        @media only screen and (max-width: 800px){
+            width: 100%;
+            align-items: center;
+        }
+
+        p,a{
+            display: block;
+            color: black;
+            font-family: fs_elliot_proregular;
+            font-size: 16px;
+        }
+
+        .social{
+            margin: 25px 0px 0px;
+
+  
+        }
+
+        .lead-soft{
+            margin: 25px 0px 0px;
+            font-size: 20px;
+            color: #3333338c;
+        }
+        .lead{
+            margin-bottom: 25px;
+            border-bottom: 1px solid black;
+            height: 34px;
+        }
+
+        .links{
+            margin: 15px 0px 0px;
+            display: flex;
+            gap: 45px;
+            a{font-size: 30px;}
+
+            i:hover{
+                color: $primaryColor;
+            }
+        }
+
+        #logo{
+            width: 180px;
+            height: 75px;
+        }
+
+        .number{
+            font-size: 23px;
+        }
+    }
+
+}
+
+.sub-footer
+{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 110px;
+    flex-wrap: wrap;
+    background-color: black;
+    
+    div:first-child{
+        font-size: 18px;
+    }
+
+    div{
+        padding: 0px 15px;
+        a,p,span{
+            color: white;
+        }
+    }
+    .polity{
+        line-height: 30px;
+    }
+    .polity{
+        display: flex;
+        @media only screen and (max-width: 800px)
+        {
+            flex-direction: column;
+            span{display: none;}
+        }
+    }
+
+    .always{
+        font-size: 26px;
+        text-align: center;
+        @media only screen and (max-width: 800px){display: none;}
+    }
+
+    @media only screen and (max-width: 800px)
+    {
+
+        div:first-child{
+            font-size: 14px;
+ 
+        }
+
+        .always{
+            font-size: 20px;
+            text-align: center;
+          
+        }
+
+    }
+
+}

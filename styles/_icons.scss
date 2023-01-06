@@ -1,0 +1,22 @@
+@import "./variables";
+
+.icon{color: $primaryTextColor;}
+.icon::before,.icon{font-family: font-icons;border:none; }
+.icon-facebook{font-style: normal;margin-left: 12px;}
+.icon-facebook:before{font-style: normal;content: "\f09a";}
+.icon-globe:before{font-style: normal;content: "\f0ac";}
+.icon-user:before{font-style: normal;font-size: 18px;content: "\f007";}
+.icon-youtube:before{font-style: normal;content: "\f167";}
+.icon-shopping-cart::before{ transform: scale(1.4);font-style: normal;content: "\f07a";}
+.icon-search::before{  font-style: normal;  content: "\f002";}
+.icon-instagram:before{ font-style: normal;content: "\f16d";}
+.icon-twitter:before{content: "\f099";}
+.icon-whatsapp::before{content: "\f232";}
+.icon-gmail::before{content: "\f0e0";}
+.icon-angle-right::before{color: $primaryColor;font-size: 24px;font-style: normal;content: "\f105";}
+
+.icon-close::before{
+    font-style: normal;content: "\f00d";
+    color: #cbcbcb;
+    &:hover{color: #9b9b9b; }
+}

@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="shortcut icon" type="x-icon" href="img/logo_acp_m.png">
+    <script src="js/logica.js"></script>
+    <script src="js/scripts_adicionais.js"></script>
+    <title>Comprar carro | ACP</title>
+</head>
+<body>
+
+    <style>
+        ui-modal{
+            display: none;
+        }
+    </style>
+
+      <ui-modal for="openModalSellVehicle">
+          <button type="exit">x</button> 
+          <multistepper id="carroForm">
+              <breadcumbs></breadcumbs>
+
+              <div class="form-subwrapper">
+                  <tab class="tab-grid active">
+                      <group>
+                          <p>Marca</p>
+                          <input id="inputMarca" placeholder="Marca" required>
+                      </group>
+
+                      <group>
+                          <p>Modelo</p>
+                          <input id="inputModelo" required>
+                      </group>
+
+                      <group>
+                          <div class="flex-between">
+                              <p>Preço de aquisição</p>
+                              <span><input type="number" for="slider-price" min="0" max="100000" value="0" oninput="updateSlider(this)" id="text-price"> $</span>
+                          </div>
+                          <input for="text-price" id="slider-price" oninput="updateSlider(this)" type="range" min="0" max="100000" value="0">
+                          
+                      </group>
+
+                      <group>
+                          <div class="flex-between">
+                              <p>Quilometragem</p>
+                              <span><input  value="0" for="slider-km" min="0" max="1000000" oninput="updateSlider(this)" id="text-km"> Km</span>
+                          </div>
+                          <input id="slider-km" for="text-km" oninput="updateSlider(this)" type="range" min="0" max="1000000" value="0"><br>
+                      </group>
+
+                      <group>
+                          <p>Data Matricula</p>
+                          <input type="date">
+                      </group>
+                  </tab>
+                  
+                  <tab class="tab-flex">
+                      <div class="card" onclick="selectCard(this)">
+                          <span class="title">Mau Estado</span>
+                          <span class="price">30000$</span>
+
+                          <div class="info">
+                              <div>
+                                  <span>Marca :</span>
+                                  <span>Modelo :</span>
+                                  <span>Matricula Ano :</span>
+                                  <span>Quilometros :</span>
+                              </div>
+
+                              <div>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="card" onclick="selectCard(this)">
+                          <span class="title">Bom Estado</span>
+                          <span class="price">30000$</span>
+
+                          <div class="info">
+                              <div>
+                                  <span>Marca :</span>
+                                  <span>Modelo :</span>
+                                  <span>Matricula Ano :</span>
+                                  <span>Quilometros :</span>
+                              </div>
+
+                              <div>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="card" onclick="selectCard(this)">
+                          <span class="title">Muito Mau Estado</span>
+                          <span class="price">30000$</span>
+
+                          <div class="info">
+                              <div>
+                                  <span>Marca :</span>
+                                  <span>Modelo :</span>
+                                  <span>Matricula Ano :</span>
+                                  <span>Quilometros :</span>
+                              </div>
+
+                              <div>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                                  <span>Batat</span>
+                              </div>
+                          </div>
+                      </div>
+                  </tab>
+
+                  <tab>
+                      <h1 id="final-price">1000$</h1>
+                  </tab>
+                  <p id="sellVehicle-erro" class="alert-red" style="margin-top: 30px;">Falta prencher os campos</p>
+              </div>
+
+              <div style="display: flex;justify-content:space-between;margin: 0px 10px;margin-top: 70px;">
+                  <button type="back" class="btn-ca smooth-red-hover">Recuar</button>
+                  <button type="next" class="btn-ca smooth-red-hover">Avançar</button>
+              </div>
+          </multistepper>
+      </ui-modal>
+
+      <ui-modal for="openModalFinaciamento">
+          <button type="exit">x</button>
+          <multistepper id="finaciamentoForm">
+              <breadcumbs></breadcumbs>
+      
+              <div class="form-subwrapper">
+              <tab class="tab-flex active" style="flex-direction: column;gap: 20px;">
+
+                  <group>
+                      <div class="flex-between">
+                          <p>Montante Total</p>
+                          <span><input type="number" for="slider-totalAmount" min="0" max="100000" value="0" oninput="updateSlider(this)" id="text-totalAmount"> $</span>
+                      </div>
+                      <input style="width: 100%;" for="text-totalAmount" id="slider-totalAmount" oninput="updateSlider(this)" type="range" min="0" max="100000" value="0">
+                  </group>
+
+
+                  <group>
+                      <div class="flex-between">
+                          <p>Entrada Inicial</p>
+                          <span><input type="number" for="slider-initialEntry" min="0" max="100000" value="0" oninput="updateSlider(this)" id="text-initialEntry"> $</span>
+                      </div>
+                      <input style="width: 100%;" for="text-initialEntry" id="slider-initialEntry" oninput="updateSlider(this)" type="range" min="0" max="100000" value="0">
+                  </group>
+
+
+                  <group>
+                      <div class="flex-between">
+                          <p>Prazo anos</p>
+                          <span><input type="number" for="slider-years" min="1" max="20" value="1" oninput="updateSlider(this)" id="text-years"> anos</span>
+                      </div>
+                      <input style="width: 100%;" for="text-years" id="slider-years" oninput="updateSlider(this)" type="range" min="1" max="20" value="1">
+                  </group>
+
+
+              
+              </tab>
+
+              <tab class="tab-flex">
+                  <div class="card" onclick="selectCard(this)">
+                      <span class="title">Valor Mensal</span>
+                      <span class="price">1000$</span>
+
+                      <div class="info">
+                          <div>
+                              <span>Montante Total</span>
+                              <span>Valor do imprestimo</span>
+                              <span>Meses</span>
+                              <span>Taxa de juro</span>
+                              <span>Spread</span>
+                              <span>Entrada inicial</span>
+                        
+                          </div>
+
+                          <div>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="card" onclick="selectCard(this)">
+                      <span class="title">Valor Mensal</span>
+                      <span class="price">1000$</span>
+
+                      <div class="info">
+                          <div>
+                              <span>Montante Total</span>
+                              <span>Valor do imprestimo</span>
+                              <span>Meses</span>
+                              <span>Taxa de juro</span>
+                              <span>Spread</span>
+                              <span>Entrada inicial</span>
+                        
+                          </div>
+
+                          <div>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                          </div>
+                      </div>
+                  </div>
+
+
+                  <div class="card" onclick="selectCard(this)">
+                      <span class="title">Valor Mensal</span>
+                      <span class="price">1000$</span>
+
+                      <div class="info">
+                          <div>
+                              <span>Montante Total</span>
+                              <span>Valor do imprestimo</span>
+                              <span>Meses</span>
+                              <span>Taxa de juro</span>
+                              <span>Spread</span>
+                              <span>Entrada inicial</span>
+                        
+                          </div>
+
+                          <div>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                              <span>Batat</span>
+                          </div>
+                      </div>
+                  </div>
+
+
+              </tab>
+
+              <tab>
+                  <h1 id="final-financing-price">1000$</h1>
+              </tab>
+
+              <p id="financing-erro"  class="alert-red" style="margin-top: 30px;">Falta prencher os campos</p>
+              <div style="display: flex;justify-content:space-between;margin: 0px 10px;margin-top: 70px;">
+                  <button type="back" class="btn-ca smooth-red-hover">Recuar</button>
+                  <button type="next" class="btn-ca smooth-red-hover">Avançar</button>
+              </div>
+
+              </div>
+          </multistepper>
+      </ui-modal>
+
+
+
+
+    <header id="header">
+
+        <div id="external-links">
+            <a id="contactos">Contactos</a>
+        <div id="social-media-icons">
+            <span>Siga-nos</span>
+            <a href="https://www.facebook.com/acp.pt" class="icon icon-facebook"></a> 
+            <a href="https://www.instagram.com/acp.automovel.club.de.portugal/" class="icon icon-instagram"></a>
+            <a href="" class="icon icon-youtube"></a>
+        </div>
+        
+        <div style="display: flex;gap:13px;" class="shopping-cart">
+            <a href="">Loja</a>
+            <div style="transform: scale(1.2);"><i class="icon icon-shopping-cart"></i></div>
+        </div>
+        
+        <i class="icon icon-globe"><span>PT</span></i>        
+        <a id="user-box" href="#">
+            <span>myACP</span>
+            <i class="icon icon-user"></i>
+        </a>
+        </div>
+        <div id="header-content">
+            <div id="header-logo">
+                <img alt="Logo Acp" src="img/logo_acp.png">
+            </div>
+            <div id="header-searchbar">
+                    <input id="input-search" placeholder="Insira o termo a pesquisar"> 
+                    <button class="transparent-button btn-search" onclick="openSearch(this)"><i class="icon icon-search smooth-red-hover"></i></button>
+                    <div id="separate"></div>
+                    <button class="transparent-button btn-close" onclick="closeSearch(this)"><i class="icon icon-close"></i></button>
+            </div>
+            <div id="header-right">
+                <div class="phone-number">
+                    <a href="tel:215915915">215 915 915</a>
+                    <span style="text-transform: uppercase;font-size:12px;">24h / 365 dias por ano</span>
+                    <span style="font-size:9px;color:#333;font-family:fs_elliot_proregular"><strong>chamada para a rede fixa nacional</strong></span>
+                </div>
+                <a href="https://www.acp.pt/novo-socio" class="btn-ca smooth-red-hover">FAÇA-SE SÓCIO</a>
+            </div>
+        </div>
+        
+        <div id="subheader" onmouseleave="hideSubMenus()">
+
+            <div id="subheader-left">
+                <a><img alt="Logo Acp mini" style="width: 50px;" src="img/logo_acp_m.png"></a>
+            </div>
+
+            <!--
+                https://www.textfixer.com/html/uncompress-html-code.php
+                https://www.textfixer.com/html/compress-html-compression.php
+            -->
+
+
+
+            <div class="outer" id="outer-1"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/o-clube/acp-a-sua-medida">ACP A SUA MEDIDA</a> <div class="outer-content"> <ul> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/10-razoes-para-ser-socio">10 Razoes para ser sócio</a></li> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/10-razoes-para-ser-socio">Sócio Familia</a></li> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/socio-0-13-anos">Sócio 0-13 anos</a></li> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/socio-14-25-anos">Sócio 14-25 anos</a></li> </ul> <ul> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/socio-25-64-anos">Sócio 25-64 anos</a></li> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/socio--65-anos">Sócio +65 anos</a></li> <li><a href="https://www.acp.pt/o-clube/acp-a-sua-medida/socio-empresa">Socio empresa</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">CLÁSSICOS</a> <div class="outer-content"> <ul > <li><a href="https://www.acp.pt/classicos/o-clube/aderir-ao-acp-classicos">Aderir ao ACP Clássicos</a></li> <li><a href="https://www.acp.pt/classicos/os-classicos/noticias">Clássicos em notícia</a></li> <li><a href="https://www.acp.pt/classicos/ter-um-classico/certificacao">Certificação de clássicos </a></li> <li><a href="https://www.acp.pt/classicos/provas-e-eventos/eventos-acp-classicos">Provas e eventos</a></li> <li><a href="https://www.acp.pt/classicos/provas-e-eventos/galeria-de-eventos">Galeria de eventos</a></li> <li><a href="https://www.acp.pt/classicos/os-classicos/o-que-e-um-classico">O que é um clássico</a></li> </ul> <ul > <li><a href="https://www.acp.pt/classicos/o-clube/revista-acp-classicos">Revista ACP Clássicos</a></li> <li><a href="https://www.acp.pt/classicos/ter-um-classico/seguro">Seguro de clássicos</a></li> <li><a href="https://www.acp.pt/classicos/ter-um-classico/cuidados-a-ter">Oficina de manutenção</a></li> <li><a href="https://www.acp.pt/classicos/os-classicos/biblioteca-digital">Biblioteca digital</a></li> <li><a href="https://www.acp.pt/classicos/conduzir-um-classico/curso-de-navegacao-de-regularidade">Curso de navegação de regularidade</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">AUTOCARAVANISMO</a> <div class="outer-content"> <ul> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/aderir-ao-acp-autocaravanismo">Aderir ao ACP Autocaravanismo</a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/noticias">Noticias</a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/revista-acp-autocaravanismo">Revista ACP Autocaravanismo </a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/viajar-em-autocaravana">Viajar em autocaravana</a></li> </ul> <ul> <li><a href="">Descobrir Portugal em autocaravana</a></li> <li><a href="">Regras do autocaravanismo</a></li> <li><a href="">Áreas de serviço para autocaravanas</a></li> <li><a href="">Autocaravanas: vantagens e desvantagens</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/golfe">GOLFE</a> <div class="outer-content"> <ul> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/aderir-ao-acp-autocaravanismo">Aderir ao ACP Autocaravanismo</a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/noticias">Noticias</a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/revista-acp-autocaravanismo">Revista ACP Autocaravanismo </a></li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo/viajar-em-autocaravana">Viajar em autocaravana</a></li> </ul> <ul> <li><a href="">Descobrir Portugal em autocaravana</a></li> <li><a href="">Regras do autocaravanismo</a></li> <li><a href="">Áreas de serviço para autocaravanas</a></li> <li><a href="">Autocaravanas: vantagens e desvantagens</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/revista-acp">REVISTA ACP</a> <div class="outer-content"> <ul> <li><a href="">Notícias do clube</a></li> <li><a href="">Atualidade</a></li> <li><a href="">Lançamentos</a></li> <li><a href="">Motos</a></li> </ul> <ul> <li><a href="">Desporto</a></li> <li><a href="">Clássicos</a></li> <li><a href="">Golfe</a></li> <li><a href="">Revista ACP Edição Impresa</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/agenda">AGENDA</a> <div class="outer-content"> <ul><li><a href="">Agenda de eventos</a></li></ul> <ul><li><a href="">Workshops Happy Hour</a></li></ul> <div class="outer-other"> <img src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/institucional">INSTITUCIONAL</a> <div class="outer-content"> <ul> <li><a href="">Sobre o ACP</a></li> <li><a href="">Historia</a></li> <li><a href="">Estatutos</a></li> <li><a href="">Arquivo fotografico</a></li> <li><a href="">Responsabilidade social</a></li> </ul> <ul> <li><a href="">Sugestões e reclamações</a></li> <li><a href="">Relatorio e Contass</a></li> <li><a href="">Orgaos sociais</a></li> <li><a href="">Recrutamentos</a></li> <li><a href="">Contactos</a></li> </ul> <div class="outer-other"> <img src="img/ACP-10-Razoes-para-ser-socio-lista.jpg"> <h1>10 Razoes para ser socio</h1> <p>As que conhece e as que o vão supreender</p> </div> </div> </li> </ul> </div>
+            <div class="outer" id="outer-2"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/servicos/assistencia">ASSISTÊNCIA</a> <div class="outer-content"> <ul> <li><a href="">Assistência em viagem</a></li> <li><a href="">Assistência no estrangeiro</a></li> <li><a href="">Proteção de Avaria</a></li> <li><a href="">Assistência a motos</a></li> <li><a href="">Assistência a bicicletas</a></li> </ul> <ul> <li><a href="">Apoio domiciliário a seniores</a></li> <li><a href="">Assistência em casa</a></li> <li><a href="">Assistência médica</a></li> <li><a href="">Assistência jurídica</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">CARTA DE CONDUÇÃO</a> <div class="outer-content"> <ul > <li><a href="">Tirar carta de condução no ACP</a></li> <li><a href="">Centros de exame de condução</a></li> <li><a href="">2ª via e alterações na carta de condução</a></li> </ul> <ul > <li><a href="">Licença internacional condução</a></li> <li><a href="">Carta por pontos</a></li> <li><a href="">Carta de embarcações recreio</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">CURSOS E FORMAÇÃO</a> <div class="outer-content"> <ul> <li><a href="">Certificação de motoristas TVDE</a></li> <li><a href="">Curso de tutores de condução</a></li> <li><a href="">Curso de atualização de código</a></li> <li><a href="">Curso de segurança rodoviária</a></li> <li><a href="">Curso de condução defensiva</a></li> </ul> <ul> <li><a href="">Curso de condução ecológica e eficiente</a></li> <li><a href="">Saúde, higiene e segurança no trabalho para motoristas</a></li> <li><a href="">Curso código da estrada</a></li> <li><a href="">Curso de tacógrafos e obrigações legais de motoristas</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/golfe">RENOVAR A CARTA DE CONDUÇÃO</a> <div class="outer-content"> <ul> <li><a href="">Renovar a carta de condução no ACP</a></li> <li><a href="">Quando renovar a carta de condução</a></li> </ul> <ul> <li><a href="">Documentos necessários para renovar a carta</a></li> <li><a href="">Atestados médicos</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/revista-acp">DESCONTOS E POUPANÇA</a> <div class="outer-content"> <ul> <li><a href="">Notícias do clube</a></li> <li><a href="">Atualidade</a></li> <li><a href="">Lançamentos</a></li> <li><a href="">Motos</a></li> </ul> <ul> <li><a href="">Desporto</a></li> <li><a href="">Clássicos</a></li> <li><a href="">Golfe</a></li> <li><a href="">Revista ACP Edição Impresa</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/agenda">LOJA ACP</a> <div class="outer-content"> <ul> <li><a href="">Vantagens e descontos ACP</a></li> <li><a href="">Como se registar e utilizar os descontos</a></li> <li><a href="">Descontos em destaque</a></li> <li><a href="">Consultar todos os descontos</a></li> <li><a href="">ABC da Poupança</a></li> <li><a href="">Vantagens na compra, venda ou arrendamento de casa</a></li> </ul> <ul> <li><a href="">Vantagens únicas - Banco BiG</a></li> <li><a href="">Descontos em grandes marcas</a></li> <li><a href="">Descontos no estrangeiro</a></li> <li><a href="">Cartão ACP Master</a></li> <li><a href="">Seja um parceiro ACP</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/institucional">PETS</a> <div class="outer-content"> <ul> <li><a href="">O que deve saber</a></li> <li><a href="">Seguros pets</a></li> <li><a href="">Descontos pets</a></li> </ul> <ul> <li><a href="">Veterinário em casa 24h</a></li> <li><a href="">Sugestões de passeios</a></li> <li><a href="">Fique a par</a></li> </ul> <div class="outer-other"> <img alt="ACP-Assistencia-Repara-ou-paga-lista.jpg" src="img/ACP-Assistencia-Repara-ou-paga-lista.jpg"> <h1>Avariou? O ACP repara ou paga</h1> <p>Saiba tudo aqui</p> </div> </div> </li> </ul> </div>
+            <div class="outer" id="outer-3"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/veiculos/comprar-carro">COMPRAR CARRO</a> <div class="outer-content"> <ul> <li><a href="">Configurar carro novo</a></li> <li><a href="">Lançamentos</a></li> <li><a href="">Renting particulares</a></li> <li><a href="">Renting empresas</a></li> <li><a href="">Renting de carros usados</a></li> </ul> <ul> <li><a href="">Pesquisa de carros usados</a></li> <li><a href="">Comprar ou vender carro no ACP</a></li> <li><a href="">Usados sócio para sócio</a></li> <li><a href="">Certificação de carros usados</a></li> </ul> <div class="outer-other"> <img alt="ACP-Renting-USADOS-FIAT-500-2022-11" src="img/ACP-Renting-USADOS-FIAT-500-2022-11.png"> <h1>Campanha do mês | Renting</h1> <p>Fiat 500C 1.2 Lounge por 249€/mês</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">MANUTENÇÃO AUTOMÓVEL</a> <div class="outer-content"> <ul > <li><a href="">Serviços Rápidos</a></li> <li><a href="">Baterias Auto ACP Ultra</a></li> <li><a href="">Peritagem mecânica</a></li> </ul> <ul > <li><a href="">Inspeção automóvel</a></li> <li><a href="">Proteção avaria</a></li> <li><a href="">Car Tracking</a></li> </ul> <div class="outer-other"> <img alt="ACP-Renting-USADOS-FIAT-500-2022-11" src="img/ACP-Renting-USADOS-FIAT-500-2022-11.png"> <h1>Campanha do mês | Renting</h1> <p>Fiat 500C 1.2 Lounge por 249€/mês</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">DOCUMENTOS E FISCALIDADE</a> <div class="outer-content"> <ul> <li><a href="">O seu clube trata de tudo</a></li> <li><a href="">Documento Único Automóvel</a></li> <li><a href="">Imposto Único de Circulação</a></li> <li><a href="">Imposto sobre veículos</a></li> <li><a href="">IVA nos automóveis</a></li> </ul> <ul> <li><a href="">Documentos aduaneiros</a></li> <li><a href="">Importação de veículos</a></li> <li><a href="">Transformação de veículos</a></li> <li><a href="">Autos de ocorrência de acidente</a></li> </ul> <div class="outer-other"> <img alt="ACP-Renting-USADOS-FIAT-500-2022-11" src="img/ACP-Renting-USADOS-FIAT-500-2022-11.png"> <h1>Campanha do mês | Renting</h1> <p>Fiat 500C 1.2 Lounge por 249€/mês</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/golfe">CONDUTOR EM DIA</a> <div class="outer-content"> <ul> <li><a href="">Mobilidade elétrica</a></li> <li><a href="">Conduzir em segurança</a></li> <li><a href="">Teste os seus conhecimentos</a></li> </ul> <ul> <li><a href="">O que saber sobre carros</a></li> <li><a href="">O que saber sobre motos</a></li> </ul> <div class="outer-other"> <img alt="ACP-Renting-USADOS-FIAT-500-2022-11" src="img/ACP-Renting-USADOS-FIAT-500-2022-11.png"> <h1>Campanha do mês | Renting</h1> <p>Fiat 500C 1.2 Lounge por 249€/mês</p> </div> </div> </li> <li class=""><a href="https://www.acp.pt/veiculos/comprar-carro">SCRIPTS ADICIONAIS</a> <div class="outer-content"> <ul> <li><a id="openModalSellVehicle">Vender Carro</a></li> </ul> <ul> <li><a id="openModalFinaciamento">Finaciamento</a></li> </ul> <div class="outer-other"> <img alt="ACP-Renting-USADOS-FIAT-500-2022-11" src="img/ACP-Renting-USADOS-FIAT-500-2022-11.png"> <h1>Campanha do mês | Renting</h1> <p>Fiat 500C 1.2 Lounge por 249€/mês</p> </div> </div> </li> <li class="unused"><a href=""></a></li> <li class="unused"><a href=""></a></li> </ul> </div> 
+            <div class="outer" id="outer-4"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/saude-e-seguros/para-si">PARA SI</a> <div class="outer-content"> <ul> <li><a href="">Seguro de vida</a></li> <li><a href="">Seguro de acidentes de trabalho</a></li> </ul> <ul> <li><a href="">Seguros de acidentes pessoais</a></li> <li><a href="">Seguro de proteção jurídica</a></li> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">PARA OS SEUS BENS</a> <div class="outer-content"> <ul > <li><a href="">Seguro automóvel</a></li> <li><a href="">Seguro de clássicos</a></li> <li><a href="">Seguro de motos</a></li> <li><a href="">Seguro de autocaravanas</a></li> </ul> <ul > <li><a href="">Seguro de bicicletas</a></li> <li><a href="">Seguro proteção jurídica automóvel</a></li> <li><a href="">Seguro habitação</a></li> <li><a href="">Seguro embarcações de recreio</a></li> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">PARA A SUA SAÚDE</a> <div class="outer-content"> <ul> <li><a href="">Plano de saúde gratuito</a></li> <li><a href="">Planos de saúde opcionais</a></li> <li><a href="">Teleconsultas</a></li> <li><a href="">Seguros de saúde</a></li> <li><a href="">Doenças Graves</a></li> </ul> <ul> <li><a href="">Apoio domiciliário a seniores</a></li> <li><a href="">Outros serviços de saúde</a></li> <li><a href="">Descontos na saúde</a></li> <li><a href="">Dicas úteis de saúde</a></li> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/golfe">PARA O SEU LAZER</a> <div class="outer-content"> <ul> <li><a href="">Seguro de viagem</a></li> <li><a href="">Seguro de golfe</a></li> <li><a href="">Seguro de caçadores</a></li> </ul> <ul> <li><a href="">Seguro de uso e porte de arma</a></li> <li><a href="">Seguros para animais</a></li> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/revista-acp">SIMULADORES</a> <div class="outer-content"> <ul> <li><a href="">Simulador seguro automóvel</a></li> <li><a href="">Simulador seguro de clássicos</a></li> </ul> <ul> <li><a href="">Simulador seguro de viagem</a></li> <li><a href="">Simulador seguro de vida</a></li> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/agenda">SOBRE O ACP SEGUROS</a> <div class="outer-content"> <ul> </ul> <ul> </ul> <div class="outer-other"> <img alt="ACP-Saude-Seguros-Seguro-Automovel-2020-lista" src="img/ACP-Saude-Seguros-Seguro-Automovel-2020-lista.jpg"> <h1>Seguro automóvel 10,99€/mês</h1> <p>Preço único para qualquer carro</p> </div> </div> </li> </ul> </div>
+            <div class="outer" id="outer-5"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/viagens-e-lazer/viagens">VIAGENS</a> <div class="outer-content"> <ul> <li><a href="">Promoções e Destaques</a></li> <li><a href="">Portugal e Espanha</a></li> <li><a href="">Europa</a></li> <li><a href="">África e Médio Oriente</a></li> <li><a href="">Grandes viagens</a></li> </ul> <ul> <li><a href="">Cruzeiros</a></li> <li><a href="">Cruzeiros fluviais</a></li> <li><a href="">Hotéis em Portugal</a></li> <li><a href="">Hotéis - reservas online</a></li> <li><a href="">Festividades</a></li> </ul> <div class="outer-other"> <img alt="ACP-Viagens-festividades-2022-lista" src="img/ACP-Viagens-festividades-2022-lista.jpg"> <h1>Festividades</h1> <p>Descubra os melhores destinos</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">ESTRADA FORA</a> <div class="outer-content"> <ul > <li><a href="">Sugestões de passeios</a></li> <li><a href="">Conhecer Portugal</a></li> <li><a href="">Conduzir em Portugal</a></li> </ul> <ul > <li><a href="">Conduzir no estrangeiro</a></li> <li><a href="">Preparar a viagem de carro</a></li> <li><a href="">Itinerários à sua medida</a></li> </ul> <div class="outer-other"> <img alt="ACP-Viagens-festividades-2022-lista" src="img/ACP-Viagens-festividades-2022-lista.jpg"> <h1>Festividades</h1> <p>Descubra os melhores destinos</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">CAMPISMO</a> <div class="outer-content"> <ul> <li><a href="">Sugestões de passeios</a></li> <li><a href="">Conhecer Portugal</a></li> <li><a href="">Conduzir em Portugal</a></li> </ul> <ul> <li><a href="">Conduzir no estrangeiro</a></li> <li><a href="">Preparar a viagem de carro</a></li> <li><a href="">Itinerários à sua medida</a></li> </ul> <div class="outer-other"> <img alt="ACP-Viagens-festividades-2022-lista" src="img/ACP-Viagens-festividades-2022-lista.jpg"> <h1>Festividades</h1> <p>Descubra os melhores destinos</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/golfe">MONTANHISMO</a> <div class="outer-content"> <ul> <li><a href="">Antes de acampar</a></li> <li><a href="">Documentos necessários</a></li> <li><a href="">Descontos em parques de campismo</a></li> </ul> <ul> <li><a href="">Dicas para campistas</a></li> <li><a href="">Marcações e reservas</a></li> </ul> <div class="outer-other"> <img alt="ACP-Viagens-festividades-2022-lista" src="img/ACP-Viagens-festividades-2022-lista.jpg"> <h1>Festividades</h1> <p>Descubra os melhores destinos</p> </div> </div> </li> <li class="unused"><a href=""></a></li> <li class="unused"><a href=""></a></li> </ul> </div>
+            <div class="outer" id="outer-6"> <ul class="outer-navbar"> <li class="active"><a href="https://www.acp.pt/desporto-automovel/noticias-e-calendarios">NOTÍCIAS E CALENDÁRIOS</a> <div class="outer-content"> <ul> <li><a href="">Notícias</a></li> <li><a href="">Agenda de provas ACP</a></li> </ul> <ul> <li><a href="">Calendário de provas nacionais</a></li> <li><a href="">Calendário de provas nacionais</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-EVENTO-LISTAGEM-24-HORAS.png"> <h1>24 horas TT Fronteira</h1> <p>Toda a emoção em 24horastt.com</p> </div> </div> </li> <li><a href="https://www.acp.pt/classicos">PROVAS</a> <div class="outer-content"> <ul > <li><a href="">Rally de Portugal</a></li> <li><a href="">Rally Portugal Histórico</a></li> <li><a href="">Portugal Summer Roads</a></li> </ul> <ul > <li><a href="">Baja TT ACP</a></li> <li><a href="">Baja Portalegre 500</a></li> <li><a href="">24 Horas TT</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-EVENTO-LISTAGEM-24-HORAS.png"> <h1>24 horas TT Fronteira</h1> <p>Toda a emoção em 24horastt.com</p> </div> </div> </li> <li><a href="https://www.acp.pt/o-clube/autocaravanismo">ESPORTS</a> <div class="outer-content"> <ul> <li><a href="">O que é o Sim Racing</a></li> </ul> <ul> <li><a href="">Como participar</a></li> </ul> <div class="outer-other"> <img alt="ACP-10-Razoes-para-ser-socio-lista" src="img/ACP-EVENTO-LISTAGEM-24-HORAS.png"> <h1>24 horas TT Fronteira</h1> <p>Toda a emoção em 24horastt.com</p> </div> </div> </li> <li class="unused"><a href=""></a></li> <li class="unused"><a href=""></a></li> <li class="unused"><a href=""></a></li> </ul> </div>
+            
+
+
+            <div id="subheader-navbar" class="container">
+                <a href="https://www.acp.pt/o-clube" onmouseenter="showSubMenu(this,'#outer-1')">O CLUBE</a>
+                <a href="https://www.acp.pt/servicos" onmouseenter="showSubMenu(this,'#outer-2')">SERVIÇOS</a>
+                <a href="https://www.acp.pt/veiculos"  onmouseenter="showSubMenu(this,'#outer-3')">VEÍCULOS</a>
+                <a href="https://www.acp.pt/saude-e-seguros"  onmouseenter="showSubMenu(this,'#outer-4')" >SAÚDE E SEGUROS</a>
+                <a href="https://www.acp.pt/viagens-e-lazer" onmouseenter="showSubMenu(this,'#outer-5')">VIAGENS E LAZER</a>
+                <a href="https://www.acp.pt/desporto-automovel/noticias-e-calendarios" onmouseenter="showSubMenu(this,'#outer-6')">DESPORTO AUTOMOVÉL</a>
+            </div>
+
+
+            <div class="subheader-right" style="margin:10px 10px;">
+                <button class="transparent-button btn-search" onclick="openSearch(this)"><i class="icon icon-search smooth-red-hover"></i></button>
+                <a><button class="btn-get-call"></button></a>
+                <a><i class="icon icon-user"></i></a>
+
+            </div>
+
+            <div class="subheader-right">
+                <a href="https://www.acp.pt/novo-socio"  class="smooth-red-hover btn-ca">FAÇA-SE SÓCIO</a>
+            </div>
+        </div>
+        
+    </header>
+    
+
+    <div class="mobile-header">
+        <div class="mobile-header-left">
+            <div class="fa-bars" onclick="toggleMobileMenu('hamburger-check','get-call')">
+               
+            </div>
+            <img src="img/logo_acp.png">
+        </div>
+
+        <div>
+            <button class="btn-get-call" onclick="toggleMobileMenu('get-call','hamburger-check')"></button>
+        </div>
+
+
+        <input type="checkbox"  style="width: 0px;" id="get-call">
+        <div class="mobile-call-menu">
+            <ul>
+                <li><a href="tel:+351215915915" class="btn-phone">Pedir Assistência ACP</a></li>
+                <li><a href="tel:+351219429143" class="btn-phone">Chamar médico a casa</a></li>
+                <li><a href="">Contactar ACP</a></li>
+                <li><a href="tel:+351215915915" class="btn-phone">A partir de Portugal</a></li>
+                <li><a href="tel:+351215915915" class="btn-phone">A partir do Estrangeiro</a></li>
+                <li><a href="mailto:apoio.socio@acp.pt" class="btn-email">apoio.socio@acp.pt</a></li>
+                <li><a href="" class="btn-all">Todos os contactos</a></li>
+            </ul>
+        </div>
+
+        <input type="checkbox"  style="width: 0px;" id="hamburger-check">
+        <div class="mobile-hambuger-menu">
+            <ul>
+                <li>
+                    <a href="">O clube</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Serviços</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Veículos</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Saúde e Seguros</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Viagens e Lazer</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Desporto Automóvel</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                <li>
+                    <a href="">Mobilidade</a>
+                    <i class="icon icon-angle-right"></i>
+                </li>
+                
+                <li class="idiomas">
+                    <img style="width: 26px;height: 16px;padding-right: 10px;" src="img/PT.png">
+                    <a>PT</a>
+                </li>
+
+                <li style="display: flex;align-items: center;">
+                    <input placeholder="Insira o termo a pesquisar"> 
+                    <i style="font-size: 22px;" class="icon icon-search"></i>
+                </li>
+
+                <div class="triple-links">
+                    <a><i class="icon icon-shopping-cart"></i></a>
+                    <a href="">Faça se socio</a>
+                    <a><i class="icon icon-user"></i></a>
+                </div>
+
+                <div class="contact">
+                    <a href="tel:215915915">215 915 915</a>
+                    <span style="font-size:10px;color:#fff">(chamada rede fixa nacional)</span>
+                </div>
+            </ul>
+
+        </div>
+    </div>
+    
+    
+    <!---------------------------------------------------------------------------------------------------->
+
+
+    <div class="outer-box">
+        <img class="" style="width: 100%;" src="img/ACP-Autos-Comprar-novo.jpg">
+
+        <div class="outer-box-content">
+            <h1>COMPRAR CARRO</h1>
+            <h2>TUDO O QUE PRECISA SABER PARE TER O ÚLTIMO MODELO</h1>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="breadcumbs">
+            <div class="hidden-links">
+                <div class="hidden-links-a">
+                    
+                    <a href="" class="smooth-red-hover">Início</a>
+                    <span>/</span>
+                    <a href="" class="smooth-red-hover">Veículos</a>
+                    <span>/</span>
+                    <a><strong>Comprar carro</strong></a>
+                </div>
+            </div>
+            
+            <div class="share-posts">
+                <p>Partilhar</p>
+                <a class="icon share icon-facebook" target="_blank"></a>
+                <a class="icon share icon-whatsapp" target="_blank"></a>
+                <a class="icon share icon-twitter" target="_blank"></a>
+                <a class="icon share icon-gmail" target="_blank"></a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--  Corpo parte do renato -->
+
+    <div class="content">
+        <div class="grid">
+
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/configurar-carro-novo">
+                    <img src="img/ACP-Autos-Configurar-carro-novo-lista.jpg">
+                </a>
+                <h1>Configurar carro novo</h1>
+                <p>Para poder exigir exatamente o que quer</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/o-clube/revista-acp/lancamentos">
+                    <img src="img/ACP-Autos-Lancamentos-lista.jpg">
+                </a>
+                <h1>Lançamentos</h1>
+                <p>Conheça as propostas mais recentes do mercado automóvel</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/renting-particulares">
+                    <img src="img/ACP-Autos-Novos-em-renting-lista.jpg">
+                </a>
+                <h1>Renting particulares</h1>
+                <p>Todas as vantagens, zero preocupações</p>
+            </div>
+            
+            <!---->
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/renting-empresas">
+                    <img src="img/ACP-Renting-Empresas-geral-lista.jpg">
+                </a>
+                <h1>Renting empresas</h1>
+                <p>A melhor oferta para o seu negócio</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/renting-de-carros-usados">
+                    <img src="img/ACP-Autos-Usados-renting-lista.jpg">
+                </a>
+                <h1>Renting de carros usados</h1>
+                <p>Automóveis atestados de vantagens</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/pesquisa-de-carros-usados">
+                    <img src="img/ACP-Autos-Pesquisar-automovel-usado-lista.jpg">
+                </a>
+                <h1>Pesquisa de carros usados </h1>
+                <p>Quem procura, encontra</p>
+            </div>
+            
+            <!-- -->
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/comprar-ou-vender-carro-no-acp">
+                    <img src="img/ACP-Autos-Vender-no-ACP-lista.jpg">
+                </a>
+                <h1>Comprar ou vender carro no ACP</h1>
+                <p>Com toda a segurança e tranquilidade</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/usados-socio-para-socio">
+                    <img src="img/ACP-Autos-Socio-para-Socio-lista.jpg">
+                </a>
+                <h1>Usados sócio para sócio</h1>
+                <p>Conhecer a origem é ter mais confiança</p>
+            </div>
+            
+            <div class="card">
+                <a href="https://www.acp.pt/veiculos/comprar-carro/certificacao-de-carros-usados">
+                    <img src="img/ACP-Autos-Certificacao-usados-lista.jpg">
+                </a>
+                <h1>Certificação de carros usados </h1>
+                <p>Uma garantia para quem compra e para quem vende</p>
+            </div>
+        </div>
+        
+    </div>
+
+    <a class="backtotop backtotop-hidden" onclick="scrollUp(0,0)" ><img src="img/arrow-up.png"></a>
+    
+    <!-- footer -->
+    <footer>
+        <div class="footer container">
+                <div class="footer-grid">
+
+                    <div class="col">
+                        <a href="https://www.acp.pt/o-clube">O CLUBE</a>
+                        <a href="https://www.acp.pt/o-clube/acp-a-sua-medida">ACP à sua medida</a>
+                        <a href="https://www.acp.pt/classicos">Clássicos</a>
+                        <a href="https://www.acp.pt/o-clube/autocaravanismo">Autocaravanismo</a>
+                        <a href="https://www.acp.pt/o-clube/golfe">Golfe</a>
+                        <a href="">Revista ACP</a>
+                        <a href="https://www.acp.pt/o-clube/agenda">Agenda</a>
+                        <a href="https://www.acp.pt/o-clube/institucional">Institucional</a>
+
+                    </div>
+        
+                    <div class="col">
+                        <a href="https://www.acp.pt/servicos">SERVIÇOS</a>
+                        <a href="https://www.acp.pt/servicos/assistencia">Assistência</a>
+                        <a href="https://www.acp.pt/servicos/carta-de-conducao">Assistência</a>
+                        <a href="https://www.acp.pt/servicos/cursos-e-formacao">Cursos e formação</a>
+                        <a href="https://www.acp.pt/servicos/renovar-a-carta-de-conducao">Renovar a carta de condução</a>
+                        <a href="https://www.acp.pt/servicos/descontos-e-poupanca">Descontos e poupança</a>
+                        <a href="https://loja.acp.pt/default.aspx">Loja ACP</a>
+                        <a href="https://www.acp.pt/servicos/pets">Pets</a>
+                    </div>
+        
+                    <div class="col">
+
+                        <a href="https://www.acp.pt/veiculos">VEÍCULOS</a>
+                        <a href="https://www.acp.pt/veiculos/comprar-carro">Comprar carro</a>
+                        <a href="https://www.acp.pt/veiculos/manutencao-automovel">Manutenção automóvel</a>
+                        <a href="https://www.acp.pt/veiculos/documentos-e-fiscalidade">Documentos e fiscalidade</a>
+                        <a href="https://www.acp.pt/veiculos/condutor-em-dia">Condutor em dia</a>
+        
+                    </div>
+        
+                    <div class="col">
+
+                        <a href="">MOBILIDADE</a>
+                        <a href="https://www.acp.pt/mobilidade/seguranca-rodoviaria">Segurança rodoviária</a>
+                        <a href="https://observatorio.acp.pt/">Observatório ACP</a>
+                        <a href="https://www.acp.pt/mobilidade/acp-kids">ACP Kids</a>
+        
+                    </div>
+        
+                    <div class="col">
+
+                        <a href="https://www.acp.pt/saude-e-seguros">Assistência</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/para-si">Assistência</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/para-os-seus-bens">Cursos e formação</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/para-a-sua-saude">Renovar a carta de condução</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/para-o-seu-lazer">Descontos e poupança</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/simuladores">Loja ACP</a>
+                        <a href="https://www.acp.pt/saude-e-seguros/sobre-o-acp-seguros">Pets</a>
+        
+                    </div>
+        
+                    <div class="col">
+
+                        <a href="https://www.acp.pt/viagens-e-lazer">VIAGENS E LAZER</a>
+                        <a href="https://www.acp.pt/viagens-e-lazer/viagens">Viagens</a>
+                        <a href="https://www.acp.pt/viagens-e-lazer/estrada-fora">Estrada Fora</a>
+                        <a href="https://www.acp.pt/viagens-e-lazer/campismo">Campismo</a>
+                        <a href="https://www.acp.pt/viagens-e-lazer/montanhismo">Montanhismo</a>
+        
+                    </div>
+        
+                    <div class="col">
+
+                        <a href="https://www.acp.pt/desporto-automovel/noticias-e-calendarios">Viagens</a>
+                        <a href="https://www.acp.pt/desporto-automovel/noticias-e-calendarios">Estrada Fora</a>
+                        <a href="https://www.acp.pt/desporto-automovel/provas">Campismo</a>
+                        <a href="https://www.acp.pt/desporto-automovel/esports">Montanhismo</a>
+        
+                    </div>
+
+
+                </div>
+
+                <div class="footer-right">
+
+                    <p class="lead">ASSISTÊNCIA E APOIO 24H</p>
+
+                    <p class="lead-soft">PORTUGAL E ESTRANGEIRO</p>
+
+                    <a href="tel:+351215915915" class="number">
+                        (+351) 
+                        <strong>215 915 915</strong>
+                    </a>
+
+                    <p>chamada para a rede fixa nacional</p>
+
+                    <p class="lead-soft">outros contactos</p>
+
+                    <a class="smooth-red-hover" href="https://www.acp.pt/o-clube/institucional/contactos">Delegações e serviços</a>
+
+                    <a class="smooth-red-hover" href="mailto:apoio.socio@acp.pt">apoio.socio@acp.pt</a>
+
+                    <div class="social">
+                        <div >
+                            <a class="lead-soft">Redes sociais</a>
+                        </div>
+                        <div class="links">
+                            <a href=""><i class="icon icon-facebook"></i></a>
+                            <a href><i class="icon icon-instagram"></i></a>
+                            <a href><i class="icon icon-youtube"></i></a>
+                        </div>
+                    </div>
+
+
+                    <div class="lead-soft">
+                        <a class="smooth-red-hover">Sugestões e reclamações</a>
+                        <a href="" class="smooth-red-hover">Resolução alternativa de conflitos</a>
+                    </div>
+                    <img class="lead-soft" id="logo" src="img/livroreclamonline.png">
+
+                </div>
+
+        </div>
+
+    </footer>
+
+
+        <div class="sub-footer">
+            <div class="container sub-footer">
+                <div class="polity">
+                    <a href="">Política de Privacidade </a>
+                    <span> | </span>
+                    <a href="">Configuração de Cookies</a>
+                    <span> | </span>
+                    <a href="">Termos e Condições</a>
+                </div>
+                <div class="always">
+                    <p>ACP, sempre comigo.</p>
+                </div>
+                <div>
+                    <p>©ACP 2022</p>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
+<script src="js/modal.js"></script>
